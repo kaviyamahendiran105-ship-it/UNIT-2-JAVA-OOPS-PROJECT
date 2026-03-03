@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+// Base Class
+class Employee {
+
+    String name;
+    int id;
+    double baseSalary;
+
+    // Constructor
+    Employee(String name, int id, double baseSalary) {
+        this.name = name;
+        this.id = id;
+        this.baseSalary = baseSalary;
+    }
+
+    // Method to calculate salary
+    double calculateSalary() {
+        return baseSalary;
+    }
+
+    // Method to display employee details
+    void displayDetails() {
+        System.out.println("\nEmployee Details");
+        System.out.println("----------------------------");
+        System.out.println("Name        : " + name);
+        System.out.println("Employee ID : " + id);
+        System.out.println("Total Salary: " + calculateSalary());
+    }
+}
+
+// Derived Class - Manager
+class Manager extends Employee {
+
+    double bonus;
+
+    Manager(String name, int id, double baseSalary, double bonus) {
+        super(name, id, baseSalary);
+        this.bonus = bonus;
+    }
+
+    @Override
+    double calculateSalary() {
+        return baseSalary + bonus;
+    }
+}
+
+// Derived Class - Developer
+class Developer extends Employee {
+
+    double overtimePay;
+
+    Developer(String name, int id, double baseSalary, double overtimePay) {
+        super(name, id, baseSalary);
+        this.overtimePay = overtimePay;
+    }
+
+    @Override
+    double calculateSalary() {
+        return baseSalary + overtimePay;
+    }
+}
+
+// Main Class
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select Employee Type:");
+        System.out.println("1. Manager");
+        System.out.println("2. Developer");
+
+        int choice = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Employee ID: ");
+        int id = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter Base Salary: ");
+        double baseSalary = Double.parseDouble(sc.nextLine());
+
+        Employee emp;
+
+        if (choice == 1) {
+            System.out.print("Enter Bonus: ");
+            double bonus = Double.parseDouble(sc.nextLine());
+            emp = new Manager(name, id, baseSalary, bonus);
+        } else {
+            System.out.print("Enter Overtime Pay: ");
+            double overtime = Double.parseDouble(sc.nextLine());
+            emp = new Developer(name, id, baseSalary, overtime);
+        }
+
+        emp.displayDetails();
+
+        sc.close();
+    }
+}

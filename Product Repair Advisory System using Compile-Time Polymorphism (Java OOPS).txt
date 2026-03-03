@@ -1,0 +1,110 @@
+import java.util.Scanner;
+
+public class Solution {
+
+    // Advisor Class
+    static class Advisor {
+
+        String userName;
+        String email;
+        String phoneNumber;
+        String productName;
+        String productModel;
+        String productType;
+        String purchaseDate;
+
+        // Constructor
+        Advisor(String userName, String email, String phoneNumber,
+                String productName, String productModel,
+                String productType, String purchaseDate) {
+
+            this.userName = userName;
+            this.email = email;
+            this.phoneNumber = phoneNumber;
+            this.productName = productName;
+            this.productModel = productModel;
+            this.productType = productType;
+            this.purchaseDate = purchaseDate;
+        }
+
+        // Common Method
+        void showDetails() {
+            System.out.println("\n----- Product Details -----");
+            System.out.println("User Name     : " + userName);
+            System.out.println("Email         : " + email);
+            System.out.println("Phone Number  : " + phoneNumber);
+            System.out.println("Product Name  : " + productName);
+            System.out.println("Product Model : " + productModel);
+            System.out.println("Product Type  : " + productType);
+            System.out.println("Purchase Date : " + purchaseDate);
+        }
+
+        // ----------- Method Overloading (Compile-Time Polymorphism) -----------
+
+        // Version 1
+        void giveSuggestion(String problem) {
+
+            showDetails();
+            System.out.println("\nRepair Suggestion:");
+
+            if (problem.equalsIgnoreCase("not working"))
+                System.out.println("Check power supply or restart the device.");
+            else if (problem.equalsIgnoreCase("screen broken"))
+                System.out.println("Screen replacement required.");
+            else
+                System.out.println("Visit authorized service center.");
+        }
+
+        // Version 2 (Overloaded Method)
+        void giveSuggestion(String problem, String warrantyStatus) {
+
+            giveSuggestion(problem);
+
+            if (warrantyStatus.equalsIgnoreCase("valid"))
+                System.out.println("Product is under warranty. Free service available.");
+            else
+                System.out.println("Warranty expired. Service charges may apply.");
+        }
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter User Name: ");
+        String userName = sc.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = sc.nextLine();
+
+        System.out.print("Enter Phone Number: ");
+        String phoneNumber = sc.nextLine();
+
+        System.out.print("Enter Product Name: ");
+        String productName = sc.nextLine();
+
+        System.out.print("Enter Product Model: ");
+        String productModel = sc.nextLine();
+
+        System.out.print("Enter Product Type: ");
+        String productType = sc.nextLine();
+
+        System.out.print("Enter Purchase Date: ");
+        String purchaseDate = sc.nextLine();
+
+        System.out.print("Enter Problem: ");
+        String problem = sc.nextLine();
+
+        System.out.print("Enter Warranty Status (valid/expired): ");
+        String warrantyStatus = sc.nextLine();
+
+        Advisor advisor = new Advisor(userName, email, phoneNumber,
+                productName, productModel, productType, purchaseDate);
+
+        // Compile-time polymorphism call
+        advisor.giveSuggestion(problem, warrantyStatus);
+
+        sc.close();
+    }
+}

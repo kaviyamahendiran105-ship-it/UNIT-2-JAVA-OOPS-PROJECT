@@ -1,0 +1,170 @@
+import java.util.Scanner;
+
+public class Solution {
+
+    // Abstract Base Class
+    abstract static class Payment {
+
+        protected double amount;
+        protected String paymentId;
+        protected String paymentDate;
+
+        // Constructor
+        Payment(double amount, String paymentId, String paymentDate) {
+            this.amount = amount;
+            this.paymentId = paymentId;
+            this.paymentDate = paymentDate;
+        }
+
+        // Abstract Method
+        abstract void makePayment();
+
+        // Common Method
+        void showDetails() {
+            System.out.println("Payment ID   : " + paymentId);
+            System.out.println("Payment Date : " + paymentDate);
+            System.out.println("Amount       : $" + amount);
+        }
+    }
+
+    // Credit Card Payment Class
+    static class CreditCardPayment extends Payment {
+
+        private String cardNumber;
+        private String cardHolderName;
+
+        CreditCardPayment(double amount, String paymentId, String paymentDate,
+                          String cardNumber, String cardHolderName) {
+
+            super(amount, paymentId, paymentDate);
+            this.cardNumber = cardNumber;
+            this.cardHolderName = cardHolderName;
+        }
+
+        @Override
+        void makePayment() {
+            System.out.println("\nPayment processed using Credit Card.");
+            showDetails();
+            System.out.println("Card Holder  : " + cardHolderName);
+            System.out.println("Card Number  : " + cardNumber);
+        }
+    }
+
+    // Debit Card Payment Class
+    static class DebitCardPayment extends Payment {
+
+        private String cardNumber;
+        private String bankName;
+
+        DebitCardPayment(double amount, String paymentId, String paymentDate,
+                         String cardNumber, String bankName) {
+
+            super(amount, paymentId, paymentDate);
+            this.cardNumber = cardNumber;
+            this.bankName = bankName;
+        }
+
+        @Override
+        void makePayment() {
+            System.out.println("\nPayment processed using Debit Card.");
+            showDetails();
+            System.out.println("Bank Name    : " + bankName);
+            System.out.println("Card Number  : " + cardNumber);
+        }
+    }
+
+    // Digital Wallet Payment Class
+    static class DigitalWalletPayment extends Payment {
+
+        private String walletId;
+        private String walletProvider;
+
+        DigitalWalletPayment(double amount, String paymentId, String paymentDate,
+                             String walletId, String walletProvider) {
+
+            super(amount, paymentId, paymentDate);
+            this.walletId = walletId;
+            this.walletProvider = walletProvider;
+        }
+
+        @Override
+        void makePayment() {
+            System.out.println("\nPayment processed using Digital Wallet.");
+            showDetails();
+            System.out.println("Wallet Provider : " + walletProvider);
+            System.out.println("Wallet ID       : " + walletId);
+        }
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select payment method:");
+        System.out.println("1. Credit Card");
+        System.out.println("2. Debit Card");
+        System.out.println("3. Digital Wallet");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Enter Amount:");
+        double amount = sc.nextDouble();
+        sc.nextLine();
+
+        System.out.println("Enter Payment ID:");
+        String paymentId = sc.nextLine();
+
+        System.out.println("Enter Payment Date:");
+        String paymentDate = sc.nextLine();
+
+        Payment payment;
+
+        switch (choice) {
+
+            case 1:
+                System.out.println("Enter Card Number:");
+                String ccNumber = sc.nextLine();
+
+                System.out.println("Enter Card Holder Name:");
+                String holderName = sc.nextLine();
+
+                payment = new CreditCardPayment(
+                        amount, paymentId, paymentDate, ccNumber, holderName);
+                break;
+
+            case 2:
+                System.out.println("Enter Card Number:");
+                String dcNumber = sc.nextLine();
+
+                System.out.println("Enter Bank Name:");
+                String bankName = sc.nextLine();
+
+                payment = new DebitCardPayment(
+                        amount, paymentId, paymentDate, dcNumber, bankName);
+                break;
+
+            case 3:
+                System.out.println("Enter Wallet ID:");
+                String walletId = sc.nextLine();
+
+                System.out.println("Enter Wallet Provider:");
+                String provider = sc.nextLine();
+
+                payment = new DigitalWalletPayment(
+                        amount, paymentId, paymentDate, walletId, provider);
+                break;
+
+            default:
+                System.out.println("Invalid choice!");
+                sc.close();
+                return;
+        }
+
+        // Runtime Polymorphism
+        payment.makePayment();
+
+        sc.close();
+    }
+}
